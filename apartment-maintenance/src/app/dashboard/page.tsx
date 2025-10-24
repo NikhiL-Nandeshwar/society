@@ -9,7 +9,6 @@ export default function Dashboard() {
   useEffect(() => {
     // Simple check: redirect to login if no token
     const token = localStorage.getItem('token');
-    console.log('t',token)
     if (!token) {
       router.push('/login');
     }

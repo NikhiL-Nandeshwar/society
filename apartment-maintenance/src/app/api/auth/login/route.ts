@@ -4,11 +4,10 @@ import jwt from "jsonwebtoken";
 import { PrismaClient } from "@/generated/prisma/client";
 
 const prisma = new PrismaClient();
-const JWT_SECRET = "your_super_secret_key"; // change this in production
+const JWT_SECRET = process.env.JWT_SECRET!;
 
 export async function POST(req: NextRequest) {
   try {
-    debugger
     const { email, password } = await req.json();
 
     // 1. Find user
@@ -22,6 +21,7 @@ export async function POST(req: NextRequest) {
     console.log('user.password',user.password)
     // 2. Check password
     const passwordMatch = await bcrypt.compare(password, user.password);
+    console.log('passwordMatch',passwordMatch)
     if (!passwordMatch) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
     }
