@@ -12,12 +12,36 @@ const Login = () => {
     const [mounted, setMounted] = useState(false);
     useEffect(() => setMounted(true), []);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (email && password) {
-            router.push('/dashboard');
-        } else {
+
+        if (!email || !password) {
             toast.error('Please fill in all fields');
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                toast.error(data.error || 'Login failed');
+                return;
+            }
+
+            // Save JWT token in localStorage (simplest approach)
+            localStorage.setItem('token', data.token);
+
+            toast.success(`Welcome ${data.user.name}!`);
+            router.push('/dashboard');
+        } catch (err) {
+            toast.error('Something went wrong. Please try again.');
+            console.error(err);
         }
     };
 
