@@ -1,23 +1,18 @@
-'use client';
+import LogoutButton from "@/components/custom/logoutButton";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+export default async function Dashboard() {
+  // const token = (await cookies()).get("token")?.value;
 
-export default function Dashboard() {
-  const router = useRouter();
-
-  useEffect(() => {
-    // Simple check: redirect to login if no token
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/login');
-    }
-  }, [router]);
+  // if (!token) {
+  //   redirect("/login");
+  // }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <h1 className="text-4xl font-bold mb-4">Welcome to Dashboard</h1>
-      <p className="text-gray-700">You are now logged in!</p>
+       <LogoutButton />
     </div>
   );
 }

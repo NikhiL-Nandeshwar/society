@@ -35,10 +35,11 @@ const Login = () => {
             }
 
             // Save JWT token in localStorage (simplest approach)
-            localStorage.setItem('token', data.token);
+            // localStorage.setItem('token', data.token);
 
             toast.success(`Welcome ${data.user.name}!`);
-            router.push('/dashboard');
+            window.location.href = "/dashboard";
+
         } catch (err) {
             toast.error('Something went wrong. Please try again.');
             console.error(err);
