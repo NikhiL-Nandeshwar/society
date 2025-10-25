@@ -15,10 +15,15 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  name      String?
-  email     String   @unique
-  password  String
-  role      String   @default("resident") // admin/resident
-  createdAt DateTime @default(now())
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String   @unique
+  password    String
+  role        String
+  mobile      String?  // New: mobile number (optional for now)
+  wing        String?  // New: wing
+  flatNumber  String?  // New: flat number
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
+

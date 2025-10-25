@@ -77,6 +77,7 @@ const Login = () => {
                         id="password"
                         label="Password"
                         type="password"
+                        showPasswordToggle
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="w-full rounded-md border border-gray-300"
@@ -91,16 +92,18 @@ const Login = () => {
 
                     <div className="text-center space-y-2">
                         <p className="text-sm text-gray-500">
-                            Haven&apos;t registered yet?{" "}
+                            Haven&apos;t onboarded yet?{" "}
                             <button
-                                onClick={() => router.push("/signup")}
+                                type='button'
+                                onClick={() => router.push("/onboarding")}
                                 className="hover:underline ml-0.5 text-foreground cursor-pointer"
-                                aria-label="Go to Signup page"
+                                aria-label="Go to Resident Onboarding page"
                             >
-                                Sign up
+                                Resident Onboarding
                             </button>
                         </p>
                     </div>
+
                 </form>
             </div>
         </div>

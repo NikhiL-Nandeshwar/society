@@ -1,16 +1,21 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
+import { Eye, EyeOff } from "lucide-react";
 
 interface FloatingInputProps extends React.ComponentProps<"input"> {
-  label: string
+  label: string;
+  showPasswordToggle?: boolean;
 }
 
 const FloatingInput = React.forwardRef<HTMLInputElement, FloatingInputProps>(
-  ({ label, className, type, ...props }, ref) => {
+  ({ label, className, type, showPasswordToggle, ...props }, ref) => {
+    const [show, setShow] = React.useState(false);
+
+    const inputType = type === "password" && show ? "text" : type;
     return (
       <div className="relative w-full">
         <input
-          type={type}
+          type={inputType}
           ref={ref}
           placeholder=" " // needed for :placeholder-shown
           className={cn(
@@ -31,6 +36,15 @@ const FloatingInput = React.forwardRef<HTMLInputElement, FloatingInputProps>(
         >
           {label}
         </label>
+        {type === "password" && showPasswordToggle && (
+          <button
+            type="button"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+            onClick={() => setShow(!show)}
+          >
+            {show ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        )}
       </div>
     )
   }

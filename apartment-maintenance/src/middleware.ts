@@ -5,7 +5,7 @@ export function middleware(req: NextRequest) {
   console.log("Middleware hit:", req.nextUrl.pathname, "Token:", token);
 
   // Public paths
-  const publicPaths = ["/login", "/signup", "/api/"];
+  const publicPaths = ["/login", "/onboarding", "/signup", "/api/"];
   if (publicPaths.some(path => req.nextUrl.pathname.startsWith(path))) {
     return NextResponse.next();
   }
@@ -19,9 +19,7 @@ export function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
-// Apply middleware to all paths except Next.js internals
 export const config = {
-  matcher: ['/((?!login|signup|_next|favicon.ico|api).*)'],
+  matcher: ['/((?!_next|favicon.ico|api).*)'], // middleware runs on all non-public pages
 };
-
 
